@@ -20,6 +20,8 @@
 package de.reimanndaniel.jledcube.system;
 
 import com.jme3.math.ColorRGBA;
+import java.util.Observable;
+import java.util.Observer;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -30,7 +32,9 @@ import static org.junit.Assert.*;
 /**
  * LEDCube Test
  */
-public class LEDCubeTest {
+public class LEDCubeTest implements Observer {
+    private int countObserved;
+    private Object observedObject;
     
     public LEDCubeTest() {
     }
@@ -45,6 +49,7 @@ public class LEDCubeTest {
     
     @Before
     public void setUp() {
+        countObserved = 0;
     }
     
     @After
@@ -107,6 +112,7 @@ public class LEDCubeTest {
         ColorRGBA expResult = ColorRGBA.Blue;
         LEDCubeDimension dimension = new LEDCubeDimension(3);
         LEDCube instance = new LEDCube(dimension);
+        instance.registerObserver(this);
         assertEquals(ColorRGBA.Black, instance.getColor(new LEDCubePoint(1, 1, 1)));
         instance.fill(expResult);
         for(int i = 0; i < 3; i++) {
@@ -116,6 +122,8 @@ public class LEDCubeTest {
                 }
             }
         }
+        assertEquals(1, countObserved);
+        assertEquals(null, observedObject);
     }
 
     /**
@@ -127,9 +135,12 @@ public class LEDCubeTest {
         LEDCubeLight expResult = new LEDCubeLight(1, 1, 1, ColorRGBA.Blue);
         LEDCubeDimension dimension = new LEDCubeDimension(3);
         LEDCube instance = new LEDCube(dimension);
+        instance.registerObserver(this);
         assertEquals(ColorRGBA.Black, instance.getColor(expResult));
         instance.setLight(expResult);
         assertEquals(expResult, instance.getLight(expResult));
+        assertEquals(1, countObserved);
+        assertEquals(expResult, observedObject);
     }
 
     /**
@@ -141,10 +152,18 @@ public class LEDCubeTest {
         LEDCubePoint point = new LEDCubePoint(1, 1, 1);
         LEDCubeDimension dimension = new LEDCubeDimension(3);
         LEDCube instance = new LEDCube(dimension);
+        instance.registerObserver(this);
         ColorRGBA expResult = ColorRGBA.Blue;
         assertEquals(ColorRGBA.Black, instance.getColor(point));
         instance.setColor(point, expResult);
         ColorRGBA result = instance.getColor(point);
         assertEquals(expResult, result);
+        assertEquals(1, countObserved);
+        assertEquals(point, observedObject);
+    }
+
+    public void update(Observable o, Object arg) {
+        countObserved++;
+        observedObject = arg;
     }
 }

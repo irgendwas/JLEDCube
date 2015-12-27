@@ -26,10 +26,8 @@ import com.jme3.scene.Node;
 import com.jme3.scene.shape.Sphere;
 import de.reimanndaniel.jledcube.system.LEDCube;
 import de.reimanndaniel.jledcube.system.LEDCubeDimension;
-import de.reimanndaniel.jledcube.system.LEDCubeLight;
 import de.reimanndaniel.jledcube.system.LEDCubePoint;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -119,6 +117,7 @@ public class LEDCubeViewer implements Observer {
                 ry = totaly / 2 * -1;
                 rx += distbetled[0];
             }
+            cube.registerObserver(this);
             init = true;
         }
         for(int ax = 0; ax < dimension.getWidth(); ax++) {

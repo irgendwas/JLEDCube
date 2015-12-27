@@ -96,7 +96,6 @@ public class LEDCubeViewerTest {
         assertEquals(ColorRGBA.Black, ((Geometry) instance.getNode().getChild(2)).getMaterial().getParam("Color").getValue());
         assertEquals(ColorRGBA.Black, ((Geometry) instance.getNode().getChild(2)).getMaterial().getParam("GlowColor").getValue());
         cube.setLight(new LEDCubeLight(0, 0, 2, ColorRGBA.Blue));
-        instance.update(null, new LEDCubeLight(0, 0, 2, ColorRGBA.Blue));
         assertEquals(ColorRGBA.Blue, ((Geometry) instance.getNode().getChild(2)).getMaterial().getParam("Color").getValue());
         assertEquals(ColorRGBA.Blue, ((Geometry) instance.getNode().getChild(2)).getMaterial().getParam("GlowColor").getValue());
     }

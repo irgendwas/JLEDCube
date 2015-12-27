@@ -20,6 +20,8 @@
 package de.reimanndaniel.jledcube.system;
 
 import com.jme3.math.ColorRGBA;
+import java.util.Observable;
+import java.util.Observer;
 
 /**
  * the real LED cube
@@ -37,6 +39,11 @@ public class LEDCube {
      * dimension of the LED
      */
     private final LEDCubeDimension dimension;
+    
+    /**
+     * the observable to observe changes of the cube
+     */
+    private final CubeObservable observable;
 
     /**
      * ctor
@@ -56,6 +63,7 @@ public class LEDCube {
     public LEDCube(LEDCubeDimension dimension, ColorRGBA initColor) {
         this.dimension = dimension;
         state = new ColorRGBA[dimension.getWidth()][dimension.getHeight()][dimension.getDepth()];
+        observable = new CubeObservable();
         fill(initColor);
     }
     
@@ -78,6 +86,7 @@ public class LEDCube {
                     state[i][j][k] = color;
             }
         }
+        observable.notifyObservers();
     }
     
     /**
@@ -107,6 +116,7 @@ public class LEDCube {
      */
     public void setColor(LEDCubePoint point, ColorRGBA color) {
         state[point.getX()][point.getY()][point.getZ()] = color;
+        observable.notifyObservers(point);
     }
     
     /**
@@ -117,5 +127,37 @@ public class LEDCube {
      */
     public ColorRGBA getColor(LEDCubePoint point) {
         return state[point.getX()][point.getY()][point.getZ()];
+    }
+    
+    /**
+     * Register an observer of the cube
+     * 
+     * @param observer the observer to register
+     */
+    public void registerObserver(Observer observer) {
+        observable.addObserver(observer);
+    }
+    
+    /**
+     * Unregister an observer of the cube
+     * 
+     * @param observer the observer to unregister
+     */
+    public void unregisterObserver(Observer observer) {
+        observable.deleteObserver(observer);
+    }
+    
+    private static class CubeObservable extends Observable {
+        @Override
+        public void notifyObservers() {
+            setChanged();
+            super.notifyObservers();
+        }
+        
+        @Override
+        public void notifyObservers(Object arg) {
+            setChanged();
+            super.notifyObservers(arg);
+        }
     }
 }
