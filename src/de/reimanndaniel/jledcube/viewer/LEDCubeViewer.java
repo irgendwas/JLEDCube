@@ -21,6 +21,7 @@ package de.reimanndaniel.jledcube.viewer;
 
 import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
+import com.jme3.math.Vector3f;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
 import com.jme3.scene.shape.Sphere;
@@ -85,6 +86,14 @@ public class LEDCubeViewer implements Observer {
      */
     public Node getNode() {
         return node;
+    }
+    
+    /**
+     * @return the size of the viewer
+     */
+    public Vector3f getSize() {
+        LEDCubeDimension dimension = cube.getDimension();
+        return new Vector3f((dimension.getWidth() - 1) * distbetled[0], (dimension.getHeight() - 1) * distbetled[1], (dimension.getDepth() - 1) * distbetled[2]);
     }
     
     /**
