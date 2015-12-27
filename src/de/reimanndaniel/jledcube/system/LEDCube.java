@@ -22,7 +22,7 @@ package de.reimanndaniel.jledcube.system;
 import com.jme3.math.ColorRGBA;
 
 /**
- * The real LED cube.
+ * the real LED cube
  * 
  * @version 0.9.1
  * @since 0.9.1
@@ -31,12 +31,12 @@ public class LEDCube {
     /**
      * internal state
      */
-    private ColorRGBA[][][] state;
+    private final ColorRGBA[][][] state;
     
     /**
      * dimension of the LED
      */
-    private LEDCubeDimension dimension;
+    private final LEDCubeDimension dimension;
 
     /**
      * ctor

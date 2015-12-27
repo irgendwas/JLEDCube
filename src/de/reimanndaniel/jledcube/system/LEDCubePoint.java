@@ -20,7 +20,7 @@
 package de.reimanndaniel.jledcube.system;
 
 /**
- * A point in the LED sube.
+ * a point in the LED cube
  * 
  * @version 0.9.1
  * @since 0.9.1

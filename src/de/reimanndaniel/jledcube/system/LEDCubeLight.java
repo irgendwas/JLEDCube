@@ -22,7 +22,7 @@ package de.reimanndaniel.jledcube.system;
 import com.jme3.math.ColorRGBA;
 
 /**
- * A light in the LED sube.
+ * a light in the LED cube
  * 
  * @version 0.9.1
  * @since 0.9.1
