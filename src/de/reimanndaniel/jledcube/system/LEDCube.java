@@ -54,6 +54,7 @@ public class LEDCube {
      * @param initColor the initial color
      */
     public LEDCube(LEDCubeDimension dimension, ColorRGBA initColor) {
+        this.dimension = dimension;
         state = new ColorRGBA[dimension.getWidth()][dimension.getHeight()][dimension.getDepth()];
         fill(initColor);
     }
