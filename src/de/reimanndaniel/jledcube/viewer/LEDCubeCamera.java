@@ -20,7 +20,6 @@
 package de.reimanndaniel.jledcube.viewer;
 
 import com.jme3.input.ChaseCamera;
-import static com.jme3.input.ChaseCamera.ChaseCamToggleRotate;
 import com.jme3.input.InputManager;
 import com.jme3.input.KeyInput;
 import com.jme3.input.MouseInput;
@@ -49,13 +48,15 @@ public class LEDCubeCamera extends ChaseCamera {
      * @param target the target to show
      */
     public LEDCubeCamera(Camera cam, final LEDCubeViewer target) {
-        super(cam);
+        super(cam, target.getNode());
         viewer = target;
         Vector3f size = viewer.getSize();
         float max = Math.max(Math.max(size.getX(), size.getY()), size.getZ());
-        setDefaultDistance( max * 2f );
-        setMinDistance( max );
-        setMaxDistance( max * 4f );
+        cam.setFrustumFar(max * 4.5f);
+        cam.onFrustumChange();
+        setDefaultDistance(max * 2f);
+        setMinDistance(max);
+        setMaxDistance(max * 4f);
     }
 
     /**
@@ -94,7 +95,7 @@ public class LEDCubeCamera extends ChaseCamera {
     @Override
     public void onAction(String name, boolean keyPressed, float tpf) {
         if(dragToRotate) {
-            if(enabled && name.equals(ChaseCamToggleRotate)) {
+            if(enabled && name.equals("ChaseCamToggleRotate")) {
                 if(keyPressed) {
                     canRotate = true;
                 }

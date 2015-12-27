@@ -22,6 +22,9 @@ package de.reimanndaniel.jledcube.viewer;
 import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector3f;
+import com.jme3.post.FilterPostProcessor;
+import com.jme3.post.filters.BloomFilter;
+import com.jme3.renderer.ViewPort;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
 import com.jme3.scene.shape.Sphere;
@@ -94,6 +97,16 @@ public class LEDCubeViewer implements Observer {
     public Vector3f getSize() {
         LEDCubeDimension dimension = cube.getDimension();
         return new Vector3f((dimension.getWidth() - 1) * distbetled[0], (dimension.getHeight() - 1) * distbetled[1], (dimension.getDepth() - 1) * distbetled[2]);
+    }
+    
+    /**
+     * Add the postprocessor filters
+     * 
+     * @param processor the postprocessor to add the filters to
+     */
+    public void addFilters(FilterPostProcessor processor) {
+        BloomFilter bloom = new BloomFilter( BloomFilter.GlowMode.Objects );
+        processor.addFilter( bloom );
     }
     
     /**
